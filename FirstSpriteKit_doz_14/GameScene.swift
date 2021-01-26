@@ -9,14 +9,52 @@
 import SpriteKit
 import GameplayKit
 
+class MySprite:SKSpriteNode{
+    var isTouched = false
+    
+    func checkIsTouched( pos : CGPoint){
+        
+        if(pos.x < self.position.x + self.frame.width/2 &&
+            pos.x > self.position.x - self.frame.width/2 &&
+            pos.y < self.position.y + self.frame.height/2 &&
+            pos.y > self.position.y - self.frame.height/2
+            
+            ){
+            
+            self.isTouched = true
+            
+            }
+      
+    }
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /************START****************/
     override func didMove(to view: SKView) {
-        
+        createBG()
+        createCloud()
+         createPig()
+        createFire()
          setPhysicWorld()
     }
     /*****************************************/
+    var cloud:Cloud!
+     func createCloud(){
+         cloud = Cloud(imageNamed: "cloud1")
+         cloud.zPosition = 40
+         cloud.setAll()
+         self.addChild(cloud)
+         cloud.createRain()
+     }
+    
+    func createBG(){
+        bg = SKSpriteNode(imageNamed: "bgfire")
+        bg.size = self.frame.size
+        bg.position = CGPoint(x: bg.frame.width/2,y: bg.frame.height/2)
+        self.addChild(bg)
+    }
+    
     func createCircle(){
         
     }
@@ -25,31 +63,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func createSpriteWithImage(pos: CGPoint){
-        let pig:SKSpriteNode = SKSpriteNode(imageNamed: "p1")
-               pig.position.x = startPos.x
-               pig.position.y = startPos.y
-               pig.size = CGSize(width: 100,height: 100)
-        
-               pig.physicsBody = SKPhysicsBody(circleOfRadius: (pig.frame.height/2)-5)
-               pig.physicsBody?.allowsRotation = true
-               pig.physicsBody?.mass =  5
-               pig.physicsBody?.friction = 100
-        
+    var pig:Pig!
+    func createPig(){
+          pig = Pig(imageNamed: "p1")
+                pig.setPosAndSize()
+        pig.zPosition = 100
+                self.addChild(pig)
           
-           self.addChild(pig)
-         setPush(obj: pig, dx: 100, dy: -100)
     }
     
-    func createParticle(){
+    private var fire:SKEmitterNode!
+       func createFire(){
+            fire = SKEmitterNode(fileNamed: "fire2")! //MyParticle is the name of the sks file.
+               fire.position.x = 600
+           fire.position.y = 50
         
-    }
-    /************************************/
-    func setPush(obj:SKSpriteNode,dx:CGFloat,dy:CGFloat){
-         let dxnew = startPos.x - dx
-         let dynew = startPos.y - dy
-            (obj.physicsBody?.applyForce(CGVector(dx: dxnew*3000, dy: dynew*3000)))!
+               fire.zPosition = 1
+               fire.alpha = 0.8
+           self.addChild(fire) //No
+       
        }
+    /************************************/
+    func shoot(x:CGFloat,y:CGFloat){
+            var dx = pig.position.x - x
+            var dy = pig.position.y - y
+           pig.setPhysics()
+           pig.setPush(dx: dx, dy: dy)
+       }
+    
+    /******************************************/
+    var bg:SKSpriteNode!
     /*****************************************/
     func setPhysicWorld(){
               //erzeuge ein Rechteck mit Physic das so gross ist wie diese GameScene
@@ -57,17 +100,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
               self.physicsBody = SKPhysicsBody(edgeLoopFrom: rect)
               
               //setze die Gravitation in diesem Rechteck
-              self.physicsWorld.gravity = CGVector(dx: 0, dy:0)
+              self.physicsWorld.gravity = CGVector(dx: 0, dy:-9.8)
            //**2**.
               self.physicsWorld.contactDelegate = self
     }
     
     /************************/
-    var startPos = CGPoint(x: 500, y: 500)
+    
+    /***************************/
     
     func touchDown(atPoint pos : CGPoint) {
-       startPos.x = pos.x
-        startPos.y = pos.y
+          pig.checkIsTouched(pos: pos)
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -75,7 +118,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func touchUp(atPoint pos : CGPoint) {
-         createSpriteWithImage(pos:pos)
+       if(pig.isTouched){
+          shoot(x: pos.x, y: pos.y)
+          pig.isTouched = false
+        }
+        
     }
     
     /************************/
@@ -99,6 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        cloud.moveXLoop()
     }
     /***********************/
 }
