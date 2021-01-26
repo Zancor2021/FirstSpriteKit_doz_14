@@ -15,6 +15,9 @@
 		D62D529825C02DFE00DA9B47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D62D529625C02DFE00DA9B47 /* Main.storyboard */; };
 		D62D529A25C02E0400DA9B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62D529925C02E0400DA9B47 /* Assets.xcassets */; };
 		D62D529D25C02E0400DA9B47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D62D529B25C02E0400DA9B47 /* LaunchScreen.storyboard */; };
+		D62D530825C038E900DA9B47 /* p1.png in Resources */ = {isa = PBXBuildFile; fileRef = D62D530525C038E800DA9B47 /* p1.png */; };
+		D62D530925C038E900DA9B47 /* p2.png in Resources */ = {isa = PBXBuildFile; fileRef = D62D530625C038E800DA9B47 /* p2.png */; };
+		D62D530A25C038E900DA9B47 /* p3.png in Resources */ = {isa = PBXBuildFile; fileRef = D62D530725C038E800DA9B47 /* p3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		D62D529925C02E0400DA9B47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62D529C25C02E0400DA9B47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D62D529E25C02E0400DA9B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D62D530525C038E800DA9B47 /* p1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p1.png; sourceTree = "<group>"; };
+		D62D530625C038E800DA9B47 /* p2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p2.png; sourceTree = "<group>"; };
+		D62D530725C038E800DA9B47 /* p3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				D62D528C25C02DFE00DA9B47 /* AppDelegate.swift */,
-				D62D528E25C02DFE00DA9B47 /* GameScene.sks */,
-				D62D529025C02DFE00DA9B47 /* Actions.sks */,
+				D62D530425C0358D00DA9B47 /* sks */,
+				D62D530B25C038F200DA9B47 /* img */,
 				D62D529225C02DFE00DA9B47 /* GameScene.swift */,
 				D62D529425C02DFE00DA9B47 /* GameViewController.swift */,
 				D62D529625C02DFE00DA9B47 /* Main.storyboard */,
@@ -71,6 +77,25 @@
 				D62D529E25C02E0400DA9B47 /* Info.plist */,
 			);
 			path = FirstSpriteKit_doz_14;
+			sourceTree = "<group>";
+		};
+		D62D530425C0358D00DA9B47 /* sks */ = {
+			isa = PBXGroup;
+			children = (
+				D62D528E25C02DFE00DA9B47 /* GameScene.sks */,
+				D62D529025C02DFE00DA9B47 /* Actions.sks */,
+			);
+			path = sks;
+			sourceTree = "<group>";
+		};
+		D62D530B25C038F200DA9B47 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				D62D530525C038E800DA9B47 /* p1.png */,
+				D62D530625C038E800DA9B47 /* p2.png */,
+				D62D530725C038E800DA9B47 /* p3.png */,
+			);
+			path = img;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,8 +158,11 @@
 			files = (
 				D62D529825C02DFE00DA9B47 /* Main.storyboard in Resources */,
 				D62D528F25C02DFE00DA9B47 /* GameScene.sks in Resources */,
+				D62D530925C038E900DA9B47 /* p2.png in Resources */,
 				D62D529A25C02E0400DA9B47 /* Assets.xcassets in Resources */,
+				D62D530A25C038E900DA9B47 /* p3.png in Resources */,
 				D62D529D25C02E0400DA9B47 /* LaunchScreen.storyboard in Resources */,
+				D62D530825C038E900DA9B47 /* p1.png in Resources */,
 				D62D529125C02DFE00DA9B47 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
