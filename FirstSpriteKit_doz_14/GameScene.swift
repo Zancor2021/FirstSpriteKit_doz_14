@@ -30,6 +30,9 @@ class MySprite:SKSpriteNode{
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var fireMask:UInt32 = 0x01
+    var pigMask:UInt32  = 0x02
+    
     /************START****************/
     override func didMove(to view: SKView) {
         createBG()
@@ -37,6 +40,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          createPig()
         createFire()
          setPhysicWorld()
+        createSun()
+    }
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+           // Called before each frame is rendered
+        cloud.moveXBorder()
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("A:::\(contact.bodyA.categoryBitMask)")
+        print("B:::\(contact.bodyB.categoryBitMask)")
+        //
+        if (contact.bodyA.categoryBitMask == 2) &&
+                      (contact.bodyB.categoryBitMask == 4294967295) {
+            pig.die()
+            
+        }
+    }
+    /******************************************/
+    func createSun(){
+        let sun = SKSpriteNode(imageNamed:"sun")
+        sun.size = CGSize(width: 100,height: 100)
+        sun.position = CGPoint(x: self.frame.width-200,y: self.frame.height-100)
+        
+            sun.zPosition = 38
+        let scale = SKAction.scale(to: 1.4, duration: 0.5)
+        let fade = SKAction.fadeAlpha(to: 0.2, duration: 1)
+        let fade2 = SKAction.fadeAlpha(to: 1, duration: 1)
+        let scale2 = SKAction.scale(to: 1, duration: 0.5)
+       
+        let rot = SKAction.rotate(byAngle: 1, duration: 1)
+        let rot2 = SKAction.rotate(byAngle: -1, duration: 1)
+        
+         let sequence = SKAction.sequence([rot,scale, fade,fade2,scale2,rot2])
+        let  repeatAction =        SKAction.repeatForever(sequence)
+        
+        self.addChild(sun)
+        sun.run(repeatAction)
     }
     /*****************************************/
     var cloud:Cloud!
@@ -69,6 +111,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 pig.setPosAndSize()
         pig.zPosition = 100
                 self.addChild(pig)
+        pig.physicsBody?.categoryBitMask = pigMask
+        pig.physicsBody?.contactTestBitMask = fireMask
+        
           
     }
     
@@ -80,7 +125,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
                fire.zPosition = 1
                fire.alpha = 0.8
+        
+        fire.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1000,height: 100))
+               
+               fire.physicsBody?.mass =  500
+               fire.physicsBody?.friction = 100
+        
            self.addChild(fire) //No
+        
+        fire.physicsBody?.categoryBitMask = pigMask
+        fire.physicsBody?.contactTestBitMask = fireMask
        
        }
     /************************************/
@@ -144,9 +198,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        cloud.moveXLoop()
-    }
+   
     /***********************/
 }
